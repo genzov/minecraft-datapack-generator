@@ -1,3 +1,5 @@
+import os
+import sys
 from typing import List
 
 from data_pack_item import DataPackItem
@@ -9,3 +11,9 @@ class DataPack:
         self.name = name
         self.items = items
         self.items.append(PackMcmeta(description, minecraft_minor_version))
+
+    def write(self):
+        project_root = os.path.dirname(sys.modules['__main__'].__file__)
+        base_path = os.path.join(project_root, 'target', self.name)
+        for item in self.items:
+            item.write(base_path)
