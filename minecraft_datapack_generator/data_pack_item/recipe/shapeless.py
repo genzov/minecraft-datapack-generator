@@ -7,8 +7,8 @@ from item import Item
 class RecipeShapeless(BaseRecipe):
 
     def __init__(self, name: str, ingredients: List[Union[Item, List[Item]]],
-                 result_item: Item, result_amount: int = 1, group: str = None):
-        super().__init__(name, result_item, result_amount, group)
+                 result_item: Item, result_amount: int = 1):
+        super().__init__(name, result_item, result_amount)
         self.ingredients = ingredients
 
     def transform_ingredients(self, ingredients):
@@ -21,7 +21,7 @@ class RecipeShapeless(BaseRecipe):
         return transformed
 
     def content(self) -> Dict:
-        content = {
+        return {
             "type": "minecraft:crafting_shapeless",
             "ingredients": self.transform_ingredients(self.ingredients),
             'result': {
@@ -29,8 +29,3 @@ class RecipeShapeless(BaseRecipe):
                 'count': self.result_amount
             }
         }
-
-        if self.group:
-            content['group'] = self.group
-
-        return content

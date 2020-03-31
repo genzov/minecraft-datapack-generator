@@ -16,6 +16,5 @@ class Item:
         elif isinstance(other, List):
             return [self] + other
 
-
     def __mul__(self, other):
         return [self] * other
