@@ -4,7 +4,7 @@ from data_pack_item import DataPackItem
 from item import Item
 
 
-class BaseRecipe(DataPackItem, ABC):
+class Recipe(DataPackItem, ABC):
 
     def __init__(self, name: str, result_item: Item, result_amount: int):
         super().__init__('recipes', name)

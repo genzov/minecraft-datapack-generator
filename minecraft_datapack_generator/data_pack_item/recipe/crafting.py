@@ -1,7 +1,7 @@
 import string
 from typing import Dict, List, Union
 
-from data_pack_item.recipe import BaseRecipe
+from data_pack_item.recipe import Recipe
 from item import Item
 
 
@@ -88,7 +88,7 @@ class Grid:
         return [''.join(row) for row in (top_row, middle_row, bottom_row) if row is not None]
 
 
-class CraftShape(BaseRecipe):
+class CraftShape(Recipe):
 
     def __init__(self, name: str, grid: Grid,
                  result_item: Item, result_amount: int = 1):
@@ -107,7 +107,7 @@ class CraftShape(BaseRecipe):
         }
 
 
-class CraftShapeless(BaseRecipe):
+class CraftShapeless(Recipe):
 
     def __init__(self, name: str, ingredients: List[Union[Item, List[Item]]],
                  result_item: Item, result_amount: int = 1):

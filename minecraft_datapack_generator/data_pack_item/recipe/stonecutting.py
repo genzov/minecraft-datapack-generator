@@ -1,11 +1,11 @@
 from abc import ABC
 from typing import Dict
 
-from data_pack_item.recipe import BaseRecipe
+from data_pack_item.recipe import Recipe
 from item import Item
 
 
-class StoneCut(BaseRecipe, ABC):
+class StoneCut(Recipe, ABC):
     def __init__(self, name: str, ingredient: Item, result_item: Item, result_amount: int = 1):
         super().__init__(name, result_item, result_amount)
         self.type = type
