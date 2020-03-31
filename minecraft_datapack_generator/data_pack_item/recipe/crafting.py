@@ -1,6 +1,7 @@
 import string
-from typing import Dict, List
+from typing import Dict, List, Union
 
+from data_pack_item.recipe import BaseRecipe
 from item import Item
 
 
@@ -85,3 +86,49 @@ class Grid:
 
         # Join the arrays and filter out empty rows
         return [''.join(row) for row in (top_row, middle_row, bottom_row) if row is not None]
+
+
+class CraftShape(BaseRecipe):
+
+    def __init__(self, name: str, grid: Grid,
+                 result_item: Item, result_amount: int = 1):
+        super().__init__(name, result_item, result_amount)
+        self.grid = grid
+
+    def content(self) -> Dict:
+        return {
+            'type': 'minecraft:crafting_shaped',
+            'pattern': self.grid.get_pattern(),
+            'key': {k: {'item': v} for k, v in self.grid.get_keys().items()},
+            'result': {
+                'item': self.result_item,
+                'count': self.result_amount
+            },
+        }
+
+
+class CraftShapeless(BaseRecipe):
+
+    def __init__(self, name: str, ingredients: List[Union[Item, List[Item]]],
+                 result_item: Item, result_amount: int = 1):
+        super().__init__(name, result_item, result_amount)
+        self.ingredients = ingredients
+
+    def transform_ingredients(self, ingredients):
+        transformed = []
+        for i in ingredients:
+            if isinstance(i, Item):
+                transformed.append({'item': i})
+            elif isinstance(i, List):
+                transformed.append(self.transform_ingredients(i))
+        return transformed
+
+    def content(self) -> Dict:
+        return {
+            "type": "minecraft:crafting_shapeless",
+            "ingredients": self.transform_ingredients(self.ingredients),
+            'result': {
+                'item': self.result_item,
+                'count': self.result_amount
+            }
+        }
