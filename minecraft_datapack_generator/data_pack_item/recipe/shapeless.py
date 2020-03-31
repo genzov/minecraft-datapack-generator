@@ -1,30 +1,31 @@
 from typing import List, Union, Dict
 
 from data_pack_item.recipe import BaseRecipe
+from item import Item
 
 
 class RecipeShapeless(BaseRecipe):
 
-    def __init__(self, name: str, ingredients: List[Union[str, List[str]]],
-                 result_item: str, result_amount: int = 1, group: str = None):
+    def __init__(self, name: str, ingredients: List[Union[Item, List[Item]]],
+                 result_item: Item, result_amount: int = 1, group: str = None):
         super().__init__(name, result_item, result_amount, group)
         self.ingredients = ingredients
 
     def transform_ingredients(self, ingredients):
         transformed = []
         for i in ingredients:
-            if isinstance(i, str):
-                transformed.append({'item': f'minecraft:{i}'})
+            if isinstance(i, Item):
+                transformed.append({'item': i})
             elif isinstance(i, List):
                 transformed.append(self.transform_ingredients(i))
         return transformed
 
     def content(self) -> Dict:
         content = {
-            "type": "crafting_shapeless",
+            "type": "minecraft:crafting_shapeless",
             "ingredients": self.transform_ingredients(self.ingredients),
             'result': {
-                'item': f'minecraft:{self.result_item}',
+                'item': self.result_item,
                 'count': self.result_amount
             }
         }

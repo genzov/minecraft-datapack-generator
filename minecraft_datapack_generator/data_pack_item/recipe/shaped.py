@@ -1,12 +1,13 @@
 from typing import Dict, List
 
 from data_pack_item.recipe import BaseRecipe
+from item import Item
 
 
 class RecipeShaped(BaseRecipe):
 
-    def __init__(self, name: str, keys: Dict[str, str], pattern: List[str],
-                 result_item: str, result_amount: int = 1, group: str = None):
+    def __init__(self, name: str, keys: Dict[str, Item], pattern: List[str],
+                 result_item: Item, result_amount: int = 1, group: str = None):
         super().__init__(name, result_item, result_amount, group)
         self.keys = keys
         self.pattern = pattern
@@ -15,9 +16,9 @@ class RecipeShaped(BaseRecipe):
         content = {
             'type': 'minecraft:crafting_shaped',
             'pattern': self.pattern,
-            'key': {k: {'item': f'minecraft:{v}'} for k, v in self.keys.items()},
+            'key': {k: {'item': v} for k, v in self.keys.items()},
             'result': {
-                'item': f'minecraft:{self.result_item}',
+                'item': self.result_item,
                 'count': self.result_amount
             },
         }
