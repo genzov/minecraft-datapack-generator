@@ -1,9 +1,10 @@
-from typing import Union, List, Dict
+from typing import Union, List
 
 from data_pack_item.loot_table.loot_table_entry import LootTableEntry
+from data_pack_item.loot_table.loot_table_meta import LootTableMeta
 
 
-class LootTablePool:
+class LootTablePool(LootTableMeta):
 
     def __init__(self, entries: Union[LootTableEntry, List[LootTableEntry]], rolls: int = 1):
         self.rolls = rolls
@@ -12,8 +13,8 @@ class LootTablePool:
         else:
             self.entries = [entries]
 
-    def content(self) -> Dict:
+    def content(self):
         return {
             'rolls': 1,
-            'entries': self.entries
+            'entries': [e.content() for e in self.entries]
         }

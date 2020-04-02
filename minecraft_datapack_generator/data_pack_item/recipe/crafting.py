@@ -27,7 +27,7 @@ class Grid:
 
     @staticmethod
     def _drop_column(rows, index):
-        return [row[:index] + row[index+1:] for row in rows]
+        return [row[:index] + row[index + 1:] for row in rows]
 
     @staticmethod
     def _row_is_empty(row):
@@ -95,7 +95,7 @@ class CraftShape(Recipe):
         super().__init__(namespace, name, output_item, output_amount)
         self.grid = grid
 
-    def content(self) -> Dict:
+    def content(self):
         return {
             'type': 'minecraft:crafting_shaped',
             'pattern': self.grid.get_pattern(),
@@ -123,7 +123,7 @@ class CraftShapeless(Recipe):
                 transformed.append(self.transform_ingredients(i))
         return transformed
 
-    def content(self) -> Dict:
+    def content(self):
         return {
             "type": "minecraft:crafting_shapeless",
             "ingredients": self.transform_ingredients(self.input_items),

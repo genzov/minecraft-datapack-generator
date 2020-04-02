@@ -1,5 +1,4 @@
 from abc import ABC
-from typing import Dict
 
 from data_pack_item.recipe import Recipe
 from item import Item
@@ -14,7 +13,7 @@ class BaseCooking(Recipe, ABC):
         self.experience = experience
         self.cooking_time = cooking_time
 
-    def content(self) -> Dict:
+    def content(self):
         return {
             'type': self.cooking_type,
             'ingredient': {

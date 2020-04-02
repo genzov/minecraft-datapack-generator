@@ -1,6 +1,8 @@
+import json
 from abc import ABC
 
 from data_pack_item import DataPackItem
+from data_pack_item.custom_encoder import CustomEncoder
 from item import Item
 
 
@@ -10,3 +12,6 @@ class Recipe(DataPackItem, ABC):
         super().__init__(namespace, 'recipes', name, 'json')
         self.output_item = output_item
         self.output_amount = output_amount
+
+    def generate(self) -> str:
+        return json.dumps(self.content(), indent=4, sort_keys=True, cls=CustomEncoder)

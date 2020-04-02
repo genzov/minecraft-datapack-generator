@@ -1,6 +1,8 @@
-from typing import Dict, Union, List
+import json
+from typing import Union, List
 
 from data_pack_item import DataPackItem
+from data_pack_item.custom_encoder import CustomEncoder
 from data_pack_item.loot_table.loot_table_pool import LootTablePool
 
 
@@ -13,7 +15,10 @@ class LootTable(DataPackItem):
         else:
             self.pools = [pools]
 
-    def content(self) -> Dict:
+    def content(self):
         return {
-            'pools': self.pools
+            'pools': [p.content() for p in self.pools]
         }
+
+    def generate(self) -> str:
+        return json.dumps(self.content(), indent=4, sort_keys=True, cls=CustomEncoder)

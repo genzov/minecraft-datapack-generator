@@ -1,5 +1,4 @@
 from abc import ABC
-from typing import Dict
 
 from data_pack_item.recipe import Recipe
 from item import Item
@@ -12,7 +11,7 @@ class StoneCut(Recipe, ABC):
         self.type = type
         self.input_item = input_item
 
-    def content(self) -> Dict:
+    def content(self):
         return {
             'type': 'minecraft:stonecutting',
             'ingredient': {
