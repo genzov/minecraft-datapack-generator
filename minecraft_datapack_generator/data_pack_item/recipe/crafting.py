@@ -91,8 +91,8 @@ class Grid:
 class CraftShape(Recipe):
 
     def __init__(self, name: str, grid: Grid,
-                 result_item: Item, result_amount: int = 1):
-        super().__init__(name, result_item, result_amount)
+                 output_item: Item, output_amount: int = 1, namespace: str = 'minecraft'):
+        super().__init__(namespace, name, output_item, output_amount)
         self.grid = grid
 
     def content(self) -> Dict:
@@ -101,18 +101,18 @@ class CraftShape(Recipe):
             'pattern': self.grid.get_pattern(),
             'key': {k: {'item': v} for k, v in self.grid.get_keys().items()},
             'result': {
-                'item': self.result_item,
-                'count': self.result_amount
+                'item': self.output_item,
+                'count': self.output_amount
             },
         }
 
 
 class CraftShapeless(Recipe):
 
-    def __init__(self, name: str, ingredients: List[Union[Item, List[Item]]],
-                 result_item: Item, result_amount: int = 1):
-        super().__init__(name, result_item, result_amount)
-        self.ingredients = ingredients
+    def __init__(self, name: str, input_items: List[Union[Item, List[Item]]],
+                 output_item: Item, output_amount: int = 1, namespace: str = 'minecraft'):
+        super().__init__(namespace, name, output_item, output_amount)
+        self.input_items = input_items
 
     def transform_ingredients(self, ingredients):
         transformed = []
@@ -126,9 +126,9 @@ class CraftShapeless(Recipe):
     def content(self) -> Dict:
         return {
             "type": "minecraft:crafting_shapeless",
-            "ingredients": self.transform_ingredients(self.ingredients),
+            "ingredients": self.transform_ingredients(self.input_items),
             'result': {
-                'item': self.result_item,
-                'count': self.result_amount
+                'item': self.output_item,
+                'count': self.output_amount
             }
         }

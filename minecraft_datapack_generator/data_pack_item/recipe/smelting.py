@@ -6,21 +6,21 @@ from item import Item
 
 
 class BaseCooking(Recipe, ABC):
-    def __init__(self, name: str, ingredient: Item, result_item: Item, type: str,
-                 experience: float = 0.1, cooking_time: int = 200, result_amount: int = 1):
-        super().__init__(name, result_item, result_amount)
-        self.type = type
-        self.ingredient = ingredient
+    def __init__(self, namespace: str, name: str, input_item: Item, output_item: Item, cooking_type: str,
+                 experience: float = 0.1, cooking_time: int = 200, output_amount: int = 1):
+        super().__init__(namespace, name, output_item, output_amount)
+        self.cooking_type = cooking_type
+        self.input_item = input_item
         self.experience = experience
         self.cooking_time = cooking_time
 
     def content(self) -> Dict:
         return {
-            'type': self.type,
+            'type': self.cooking_type,
             'ingredient': {
-                'item': self.ingredient
+                'item': self.input_item
             },
-            'result': self.result_item,
+            'result': self.output_item,
             'experience': self.experience,
             'cookingtime': self.cooking_time
         }
@@ -28,28 +28,31 @@ class BaseCooking(Recipe, ABC):
 
 class Blast(BaseCooking):
 
-    def __init__(self, name: str, ingredient: Item, result_item: Item,
-                 experience: float = 0.1, cooking_time: int = 200, result_amount: int = 1):
-        super().__init__(name, ingredient, result_item, 'minecraft:blasting', experience, cooking_time, result_amount)
+    def __init__(self, name: str, input_item: Item, output_item: Item, experience: float = 0.1,
+                 cooking_time: int = 200, output_amount: int = 1, namespace: str = 'minecraft'):
+        super().__init__(namespace, name, input_item, output_item, 'minecraft:blasting',
+                         experience, cooking_time, output_amount)
 
 
 class Campfire(BaseCooking):
 
-    def __init__(self, name: str, ingredient: Item, result_item: Item,
-                 experience: float = 0.1, cooking_time: int = 200, result_amount: int = 1):
-        super().__init__(name, ingredient, result_item, 'minecraft:campfire_cooking',
-                         experience, cooking_time, result_amount)
+    def __init__(self, name: str, input_item: Item, output_item: Item, experience: float = 0.1,
+                 cooking_time: int = 200, output_amount: int = 1, namespace: str = 'minecraft'):
+        super().__init__(namespace, name, input_item, output_item, 'minecraft:campfire_cooking',
+                         experience, cooking_time, output_amount)
 
 
 class Smelt(BaseCooking):
 
-    def __init__(self, name: str, ingredient: Item, result_item: Item,
-                 experience: float = 0.1, cooking_time: int = 200, result_amount: int = 1):
-        super().__init__(name, ingredient, result_item, 'minecraft:smelting', experience, cooking_time, result_amount)
+    def __init__(self, name: str, input_item: Item, output_item: Item, experience: float = 0.1,
+                 cooking_time: int = 200, output_amount: int = 1, namespace: str = 'minecraft'):
+        super().__init__(namespace, name, input_item, output_item, 'minecraft:smelting',
+                         experience, cooking_time, output_amount)
 
 
 class Smoke(BaseCooking):
 
-    def __init__(self, name: str, ingredient: Item, result_item: Item,
-                 experience: float = 0.1, cooking_time: int = 200, result_amount: int = 1):
-        super().__init__(name, ingredient, result_item, 'minecraft:smoking', experience, cooking_time, result_amount)
+    def __init__(self, name: str, input_item: Item, output_item: Item, experience: float = 0.1,
+                 cooking_time: int = 200, output_amount: int = 1, namespace: str = 'minecraft'):
+        super().__init__(namespace, name, input_item, output_item, 'minecraft:smoking',
+                         experience, cooking_time, output_amount)

@@ -2,7 +2,6 @@ import json
 import os
 from abc import ABC, abstractmethod
 from json import JSONEncoder
-from typing import Dict
 
 from item import Item
 
@@ -15,21 +14,20 @@ class CustomEncoder(JSONEncoder):
 
 
 class DataPackItem(ABC):
-    def __init__(self, category: str, name: str, sub_path: str = 'data/minecraft', file_extension: str = 'json'):
-        self.category = category
+    def __init__(self, namespace: str, kind: str, name: str, extension: str):
+        self.namespace = namespace
+        self.kind = kind
         self.name = name
-        self.file_extension = file_extension
-        self.sub_path = sub_path
+        self.extension = extension
 
     @abstractmethod
-    def content(self) -> Dict:
+    def content(self):
         raise NotImplementedError()
 
+    # TODO: Make this variable as not all files will be JSON
     def generate(self) -> str:
         return json.dumps(self.content(), indent=4, sort_keys=True, cls=CustomEncoder)
 
-    def write(self, base_path: str):
-        path = os.path.join(base_path, self.sub_path, self.category, f'{self.name}.{self.file_extension}')
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, 'w') as f:
+    def write(self, path: str):
+        with open(os.path.join(path, f'{self.name}.{self.extension}'), 'w') as f:
             f.write(self.generate())
