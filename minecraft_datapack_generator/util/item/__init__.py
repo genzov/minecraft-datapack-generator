@@ -1,14 +1,9 @@
 from typing import List
 
+from util import Util
 
-class Item:
 
-    def __init__(self, name: str, namespace: str = 'minecraft'):
-        self.name = name
-        self.namespace = namespace
-
-    def __str__(self):
-        return f'{self.namespace}:{self.name}'
+class Item(Util):
 
     def __add__(self, other):
         if isinstance(other, Item):

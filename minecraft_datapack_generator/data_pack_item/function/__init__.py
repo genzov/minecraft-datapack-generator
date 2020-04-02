@@ -14,4 +14,7 @@ class Function(DataPackItem):
             self.commands = [commands]
 
     def content(self):
-        return '\n'.join(c.value for c in self.commands)
+        return [c.value for c in self.commands]
+
+    def generate(self) -> str:
+        return '\n'.join(self.content())

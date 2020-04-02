@@ -2,7 +2,7 @@ import string
 from typing import Dict, List, Union
 
 from data_pack_item.recipe import Recipe
-from item import Item
+from util.item import Item
 
 
 class Grid:

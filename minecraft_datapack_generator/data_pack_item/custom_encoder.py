@@ -1,7 +1,7 @@
 import json
 from json import JSONEncoder
 
-from item import Item
+from util.item import Item
 
 
 class CustomEncoder(JSONEncoder):

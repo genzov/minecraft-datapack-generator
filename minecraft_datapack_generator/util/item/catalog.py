@@ -1,4 +1,4 @@
-from item import Item
+from util.item import Item
 
 acacia_boat = Item('acacia_boat')
 acacia_button = Item('acacia_button')

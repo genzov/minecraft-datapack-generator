@@ -3,7 +3,7 @@ from abc import ABC
 
 from data_pack_item import DataPackItem
 from data_pack_item.custom_encoder import CustomEncoder
-from item import Item
+from util.item import Item
 
 
 class Recipe(DataPackItem, ABC):

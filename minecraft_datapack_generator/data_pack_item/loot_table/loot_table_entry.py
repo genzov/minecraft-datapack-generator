@@ -1,13 +1,14 @@
-from typing import Union, List
+from typing import Union, List, Dict
 
-from data_pack_item.function import Function
+from data_pack_item.loot_table.loot_table_function import LootTableFunction
 from data_pack_item.loot_table.loot_table_meta import LootTableMeta
-from item import Item
+from util.item import Item
 
 
 class LootTableEntry(LootTableMeta):
 
-    def __init__(self, item: Item, weight: int = 1, functions: Union[Function, List[Function]] = None):
+    def __init__(self, item: Item, weight: int = 1,
+                 functions: Union[LootTableFunction, List[LootTableFunction]] = None):
         self.item = item
         self.weight = weight
 
@@ -18,7 +19,7 @@ class LootTableEntry(LootTableMeta):
         else:
             self.functions = [functions]
 
-    def content(self):
+    def content(self) -> Dict:
         result = {
             'type': 'item',
             'name': self.item,

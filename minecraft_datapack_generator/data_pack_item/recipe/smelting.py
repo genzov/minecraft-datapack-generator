@@ -1,7 +1,7 @@
 from abc import ABC
 
 from data_pack_item.recipe import Recipe
-from item import Item
+from util.item import Item
 
 
 class BaseCooking(Recipe, ABC):
